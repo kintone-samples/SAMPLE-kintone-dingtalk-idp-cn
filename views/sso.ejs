@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DingTalk Login</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
+  </head>
+  <body>
+    <h1>DingTalk Login</h1>
+    <p>Welcome <%= appKey %></p>
+    <div id="login_container"></div>
+  </body>
+  <script>
+    var url = encodeURIComponent('http://localhost:3000/users/')
+    var goto = encodeURIComponent('https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=<%= appKey %>&response_type=code&scope=snsapi_login&state=STATE&redirect_uri='+url)
+    DDLogin({
+      id:"login_container",
+      goto,
+      style: "border:none;background-color:#FFFFFF;",
+      width : "365",
+      height: "400"
+    });
+    var handleMessage = async function (event) {
+      var origin = event.origin;
+      console.log("origin", event.origin);
+      if( origin == "https://login.dingtalk.com" ) {
+        var loginTmpCode = event.data; 
+        // window.location.replace(`https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=<%= appKey %>&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=${url}&loginTmpCode=${loginTmpCode}`);
+        const res = await fetch(`/saml/ding?loginTmpCode=${loginTmpCode}`)
+        const text = await res.text()
+        console.log(text)
+      }
+    };
+    if (typeof window.addEventListener != 'undefined') {
+      window.addEventListener('message', handleMessage, false);
+    } else if (typeof window.attachEvent != 'undefined') {
+      window.attachEvent('onmessage', handleMessage);
+    }
+  </script>
+</html>
