@@ -7,11 +7,15 @@
   </head>
   <body>
     <h1>DingTalk Login</h1>
-    <p>Welcome <%= appKey %></p>
+    <p>Welcome</p>
     <div id="login_container"></div>
+    <form action='/signin' method='post' id='signin'>
+      <input type='hidden' id='userName' name='userName' />
+      <input type='hidden' name='SAMLRequest' value='<%= SAMLRequest %>' />
+    </form>
   </body>
   <script>
-    var url = encodeURIComponent('http://localhost:3000/users/')
+    var url = encodeURIComponent('<%= callback %>')
     var goto = encodeURIComponent('https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=<%= appKey %>&response_type=code&scope=snsapi_login&state=STATE&redirect_uri='+url)
     DDLogin({
       id:"login_container",
@@ -22,13 +26,14 @@
     });
     var handleMessage = async function (event) {
       var origin = event.origin;
-      console.log("origin", event.origin);
       if( origin == "https://login.dingtalk.com" ) {
         var loginTmpCode = event.data; 
-        // window.location.replace(`https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=<%= appKey %>&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=${url}&loginTmpCode=${loginTmpCode}`);
-        const res = await fetch(`/saml/ding?loginTmpCode=${loginTmpCode}`)
-        const text = await res.text()
-        console.log(text)
+        const res = await fetch(`/api/dingtalk?d=<%= domain %>&loginTmpCode=${loginTmpCode}`)
+        const data = await res.json()
+        const username = document.getElementById('userName')
+        username.value = data.loginName
+        const form = document.getElementById('signin')
+        form.submit()
       }
     };
     if (typeof window.addEventListener != 'undefined') {
