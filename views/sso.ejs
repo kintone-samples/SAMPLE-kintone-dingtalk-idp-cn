@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>DingTalk Login</title>
+    <title>SSO</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="https://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
   </head>
   <body>
-    <h1>DingTalk Login</h1>
-    <p>Welcome</p>
-    <div id="login_container"></div>
-    <form action='/signin' method='post' id='signin'>
-      <input type='hidden' id='userName' name='userName' />
-      <input type='hidden' name='SAMLRequest' value='<%= SAMLRequest %>' />
-    </form>
+    <div class="main">
+      <h1>扫码登陆</h1>
+      <h3>请使用手机版钉钉</h3>
+      <div id="login_container"></div>
+      <div id="loading" class="loading" hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <form action='/signin' method='post' id='signin'>
+        <input type='hidden' id='loginTmpCode' name='loginTmpCode' />
+        <input type='hidden' name='SAMLRequest' value='<%= SAMLRequest %>' />
+      </form>
+    </div>
   </body>
   <script>
-    var url = encodeURIComponent('<%= callback %>')
-    var goto = encodeURIComponent('https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=<%= appKey %>&response_type=code&scope=snsapi_login&state=STATE&redirect_uri='+url)
+    const url = encodeURIComponent('<%= callback %>')
+    const goto = encodeURIComponent('https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=<%= appKey %>&response_type=code&scope=snsapi_login&state=STATE&redirect_uri='+url)
     DDLogin({
       id:"login_container",
       goto,
@@ -24,14 +33,15 @@
       width : "365",
       height: "400"
     });
-    var handleMessage = async function (event) {
+    var handleMessage = function (event) {
       var origin = event.origin;
       if( origin == "https://login.dingtalk.com" ) {
-        var loginTmpCode = event.data; 
-        const res = await fetch(`/api/dingtalk?d=<%= domain %>&loginTmpCode=${loginTmpCode}`)
-        const data = await res.json()
-        const username = document.getElementById('userName')
-        username.value = data.loginName
+        const container = document.getElementById('login_container')
+        container.hidden = true
+        const loading = document.getElementById('loading')
+        loading.hidden = false
+        const loginTmpCode = document.getElementById('loginTmpCode')
+        loginTmpCode.value = event.data;
         const form = document.getElementById('signin')
         form.submit()
       }

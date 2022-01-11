@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="UeHP5iiRzbtNr5ivrMwh" name="第 1 页">
-        <mxGraphModel dx="837" dy="339" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="625" dy="360" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -19,7 +19,7 @@
                 <mxCell id="10" value="target" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="480" y="30" width="120" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="11" value="cybozush" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="11" value="DB Server" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="240" y="30" width="120" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="12" value="" style="endArrow=classic;html=1;exitX=0.661;exitY=0.044;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="9" edge="1">
