@@ -193,3 +193,4 @@ $RECYCLE.BIN/
 *.vsix
 
 yarn.lock
+*.pem
