@@ -13,7 +13,7 @@ module.exports.get = async (domain) =>{
     cache.set(`setting:${domain}`,{
         get:getSetting,
         params:[domain],
-        timeout:7200
+        timeout:constants.timeout.short
     })
     return await cache.get(`setting:${domain}`)
 }

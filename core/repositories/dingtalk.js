@@ -1,12 +1,27 @@
 const crypto = require('crypto');
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const { request } = require('undici')
 const cache = require('../cache')
-const { agent } = require('../constants')
+const { timeout } = require('../constants')
 
 const getAccessToken = async(appKey,appSecret)=>{
-  const response = await fetch(`https://oapi.dingtalk.com/gettoken?appkey=${appKey}&appsecret=${appSecret}`)
-  const data = await response.json();
-  return data.access_token
+  const { body } = await request(`https://oapi.dingtalk.com/gettoken?appkey=${appKey}&appsecret=${appSecret}`)
+  return (await body.json()).access_token
+}
+
+const getUser = async (appKey,appSecret,unionid) =>{
+  const token = await cache.get(`token:${appKey}:${appSecret}`)
+  const user = {}
+  const { body } = await request(`https://oapi.dingtalk.com/topapi/user/getbyunionid?access_token=${token}`,{
+    method: 'POST',
+    body: JSON.stringify({ unionid }),
+  })
+  user.userid = (await body.json()).result.userid;
+  const res = await request(`https://oapi.dingtalk.com/topapi/v2/user/get?access_token=${token}`,{
+    method: 'POST',
+    body: JSON.stringify({ userid : user.userid }),
+  })
+  user.mobile = (await res.body.json()).result.mobile;
+  return user
 }
 
 module.exports = class Dingtalk {
@@ -16,7 +31,7 @@ module.exports = class Dingtalk {
         cache.set(`token:${appKey}:${appSecret}`,{
           get:getAccessToken,
           params:[appKey,appSecret],
-          timeout:7200
+          timeout:timeout.short
         })
     }
 
@@ -27,55 +42,31 @@ module.exports = class Dingtalk {
     }
 
     async getLoginCode(tempcode,callbakurl) {
-        const url = `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${this.appKey}&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=${encodeURIComponent(callbakurl)}&loginTmpCode=${tempcode}`
-        const response = await fetch(url,{redirect: 'manual',agent});
-        const code = new URL(response.headers.get('location')).searchParams.get('code')
+        const { headers } = await request(`https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${this.appKey}&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=${encodeURIComponent(callbakurl)}&loginTmpCode=${tempcode}`)
+        const code = new URL(headers.location).searchParams.get('code')
         return code
     }
 
     async getUnionid(tmp_auth_code){
         const now = Date.now()
-        const obj = {
-          tmp_auth_code,
-        }
-        const response = await fetch(`https://oapi.dingtalk.com/sns/getuserinfo_bycode?signature=${this.signature(now)}&timestamp=${now}&accessKey=${this.appKey}`, 
+        const { body } = await request(`https://oapi.dingtalk.com/sns/getuserinfo_bycode?signature=${this.signature(now)}&timestamp=${now}&accessKey=${this.appKey}`, 
         { 
           method: 'POST',
-          body: JSON.stringify(obj),
-          agent
+          body: JSON.stringify({ tmp_auth_code }),
         });
-        const data = await response.json();
-        return data.user_info.unionid
+        return (await body.json()).user_info.unionid
     }
 
-    async getUserid(unionid){
-      const token = await cache.get(`token:${this.appKey}:${this.appSecret}`)
-      const obj = {
-        unionid,
-      }
-      const response = await fetch(`https://oapi.dingtalk.com/topapi/user/getbyunionid?access_token=${token}`, 
-      { 
-        method: 'POST',
-        body: JSON.stringify(obj),
-        agent
-      });
-      const data = await response.json();
-      return data.result.userid
+    async getUser(unionid) {
+      const key = `user:${this.appKey}:${unionid}`
+      const user = await cache.get(key)
+      if (user) console.log('cache!')
+      if (user) return user
+      cache.set(key,{
+        get:getUser,
+        params:[`${this.appKey}`,`${this.appSecret}`,unionid],
+        timeout:timeout.long
+      })
+      return await cache.get(key)
     }
-
-    async getMobile(userid){
-      const token = await cache.get(`token:${this.appKey}:${this.appSecret}`)
-      const obj = {
-        userid,
-      }
-      const response = await fetch(`https://oapi.dingtalk.com/topapi/v2/user/get?access_token=${token}`, 
-      { 
-        method: 'POST',
-        body: JSON.stringify(obj),
-        agent
-      });
-      const data = await response.json();
-      return data.result.mobile
-    }
-    
 }

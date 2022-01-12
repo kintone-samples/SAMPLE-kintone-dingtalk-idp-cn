@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const samlp = require('samlp')
 const constants = require('../core/constants')
-const PassportProfileMapper = require('../core/claims/PassportProfileMapper')
+const PassportProfileMapper = require('../core/claims/passport_profile_mapper')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

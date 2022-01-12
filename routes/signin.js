@@ -5,7 +5,7 @@ const { credentials,issuer,asyncParseRequest } = require('../core/constants')
 const settings = require('../core/settings')
 const Dingtalk = require('../core/repositories/dingtalk')
 const Kintone = require('../core/repositories/kintone')
-const PassportProfileMapper = require('../core/claims/PassportProfileMapper')
+const PassportProfileMapper = require('../core/claims/passport_profile_mapper')
 
 router.post('/', async function(req, res, next) {
   try {
@@ -16,14 +16,10 @@ router.post('/', async function(req, res, next) {
     const dt = new Dingtalk(setting.appKey,setting.appSecret)
     const kt = new Kintone({domain,appid:setting.appid,token:setting.token})
     const code = await dt.getLoginCode(tempcode,setting.callback)
-    console.log(`code:${code}`)
     const unionid = await dt.getUnionid(code)
-    console.log(`unionid:${unionid}`)
-    const uid = await dt.getUserid(unionid)
-    console.log(`uid:${uid}`)
-    const mobile = await dt.getMobile(uid)
-    console.log(`mobile:${mobile}`)
-    const loginName = await kt.getLoginName(mobile)
+
+    const user = await dt.getUser(unionid)
+    const loginName = await kt.getLoginName(user.mobile)
 
     req.user = {
       loginName,
