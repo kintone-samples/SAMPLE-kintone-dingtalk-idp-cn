@@ -24,8 +24,8 @@
     </div>
   </body>
   <script>
-    const url = encodeURIComponent('<%= callback %>')
-    const goto = encodeURIComponent('https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=<%= appKey %>&response_type=code&scope=snsapi_login&state=STATE&redirect_uri='+url)
+    var url = encodeURIComponent('<%= callback %>')
+    var goto = encodeURIComponent('https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=<%= appKey %>&response_type=code&scope=snsapi_login&state=STATE&redirect_uri='+url)
     DDLogin({
       id:"login_container",
       goto,
@@ -36,13 +36,13 @@
     var handleMessage = function (event) {
       var origin = event.origin;
       if( origin == "https://login.dingtalk.com" ) {
-        const container = document.getElementById('login_container')
+        var container = document.getElementById('login_container')
         container.hidden = true
-        const loading = document.getElementById('loading')
+        var loading = document.getElementById('loading')
         loading.hidden = false
-        const loginTmpCode = document.getElementById('loginTmpCode')
+        var loginTmpCode = document.getElementById('loginTmpCode')
         loginTmpCode.value = event.data;
-        const form = document.getElementById('signin')
+        var form = document.getElementById('signin')
         form.submit()
       }
     };
