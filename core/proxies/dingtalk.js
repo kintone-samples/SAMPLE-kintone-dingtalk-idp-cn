@@ -26,7 +26,7 @@ module.exports = class Dingtalk {
   }
 
   async mobile(unionid) {
-    const mobile = await cache.getValue(`dingtalk:mobile:${unionid}`, {
+    const mobile = await cache.getValue(`dingtalk:mobile:${this.appKey}:${unionid}`, {
       func: getMobile,
       params: [this.appKey, this.appSecret, unionid],
     })
