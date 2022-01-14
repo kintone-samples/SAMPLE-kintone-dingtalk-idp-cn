@@ -3,7 +3,7 @@ Node.js开发的Identity provider。
 能使用钉钉扫码直接登陆kintone。 
 
 # 效果
-![效果](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/screenshot.gif?token=GHSAT0AAAAAABHVJOO65YANQFY5VXANOAK4YPBEVAA)
+![效果](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/screenshot.gif?token=GHSAT0AAAAAABHVJOO7I5BHCLTZIGFHL2HOYPBEW3Q)
 
 # 原理
 ![原理](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/design.png?token=GHSAT0AAAAAABHVJOO65YANQFY5VXANOAK4YPBEVAA)
