@@ -20,7 +20,7 @@ module.exports.issuer = 'urn:cn:idp'
 module.exports.asyncParseRequest = util.promisify(samlp.parseRequest)
 
 module.exports.timeout = {
-  short: 7200,
-  medium: 864000,
-  long: 604800,
+  short: 7200000,
+  medium: 86400000,
+  long: 1209600000,
 }

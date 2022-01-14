@@ -3,9 +3,8 @@ const express = require('express')
 const router = express.Router()
 const samlp = require('samlp')
 const { credentials, issuer, asyncParseRequest } = require('../core/constants')
-const settings = require('../core/settings')
-const Dingtalk = require('../core/repositories/dingtalk')
-const Kintone = require('../core/repositories/kintone')
+const kt = require('../core/proxies/kintone')
+const Dingtalk = require('../core/proxies/dingtalk')
 const PassportProfileMapper = require('../core/claims/passport_profile_mapper')
 
 router.post('/', async (req, res, next) => {
@@ -13,14 +12,11 @@ router.post('/', async (req, res, next) => {
     const data = await asyncParseRequest(req)
     const domain = new URL(data.issuer).host
     const tempcode = req.body.loginTmpCode
-    const setting = await settings.get(domain)
+    const setting = await kt.setting(domain)
     const dt = new Dingtalk(setting.appKey, setting.appSecret)
-    const kt = new Kintone({ domain, appid: setting.appid, token: setting.token })
-    const code = await dt.getLoginCode(tempcode, setting.callback)
-    const unionid = await dt.getUnionid(code)
-
-    const user = await dt.getUser(unionid)
-    const loginName = await kt.getLoginName(user.mobile)
+    const unionid = await dt.unionid(tempcode, setting.callback)
+    const mobile = await dt.mobile(unionid)
+    const loginName = await kt.loginName(setting, mobile)
 
     req.user = { loginName }
 
