@@ -1,4 +1,4 @@
-# cn-idp
+# Dingtalk-IdP-demo
 Node.js开发的Identity provider。  
 能使用钉钉扫码直接登陆kintone。 
 
