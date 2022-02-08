@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Auth</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script src="https://g.alicdn.com/dingding/dingtalk-jsapi/2.13.42/dingtalk.open.js"></script>
+    <script>
+      dd.ready(function() {
+       dd.runtime.permission.requestAuthCode({
+           corpId: '<%= corpId %>',
+           onSuccess: function (info) {
+               var code = document.getElementById('code')
+               code.value = info.code
+               var form = document.getElementById('signin')
+               form.submit()
+           },
+           onFail : function(err) {
+               alert(JSON.stringify(err))
+           }
+         });
+       });
+     </script>
+  </head>
+  <body>
+    <div class="center">
+      <div class="loading">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <form action="/signin" method="post" id="signin">
+        <input type="hidden" id="code" name="code"/>
+        <input type="hidden" name="SAMLRequest" value="<%= SAMLRequest %>" />
+      </form>
+    </div>
+  </body>
+</html>

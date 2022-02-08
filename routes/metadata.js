@@ -1,9 +1,9 @@
-const express = require('express')
+const express = require('express');
 
-const router = express.Router()
-const samlp = require('samlp')
-const constants = require('../core/constants')
-const PassportProfileMapper = require('../core/claims/passport_profile_mapper')
+const router = express.Router();
+const samlp = require('samlp');
+const constants = require('../core/constants');
+const PassportProfileMapper = require('../core/claims/passport_profile_mapper');
 
 router.get('/', (req, res, next) => {
   samlp.metadata({
@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
     profileMapper: PassportProfileMapper,
     redirectEndpointPath: '/saml/sso',
     postEndpointPath: '/saml/sso',
-  })(req, res, next)
-})
+  })(req, res, next);
+});
 
-module.exports = router
+module.exports = router;

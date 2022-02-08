@@ -2,10 +2,10 @@
 <html>
   <head>
     <title>SSO</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <script src="https://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
   </head>
-  <body>
+  <body class="bg">
     <div class="main">
       <h1>扫码登录</h1>
       <h3>请使用手机版钉钉</h3>
@@ -17,39 +17,42 @@
         <span></span>
         <span></span>
       </div>
-      <form action='/signin' method='post' id='signin'>
-        <input type='hidden' id='loginTmpCode' name='loginTmpCode' />
-        <input type='hidden' name='SAMLRequest' value='<%= SAMLRequest %>' />
+      <form action="/signin" method="post" id="signin">
+        <input type="hidden" id="loginTmpCode" name="loginTmpCode" />
+        <input type="hidden" name="SAMLRequest" value="<%= SAMLRequest %>" />
       </form>
     </div>
   </body>
   <script>
-    var url = encodeURIComponent('<%= callback %>')
-    var goto = encodeURIComponent('https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=<%= appKey %>&response_type=code&scope=snsapi_login&state=STATE&redirect_uri='+url)
+    var url = encodeURIComponent("<%= callback %>");
+    var goto = encodeURIComponent(
+      "https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=<%= appKey %>&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=" +
+        url
+    );
     DDLogin({
-      id:"login_container",
+      id: "login_container",
       goto,
       style: "border:none;background-color:#FFFFFF;",
-      width : "365",
-      height: "400"
+      width: "365",
+      height: "400",
     });
     var handleMessage = function (event) {
       var origin = event.origin;
-      if( origin == "https://login.dingtalk.com" ) {
-        var container = document.getElementById('login_container')
-        container.hidden = true
-        var loading = document.getElementById('loading')
-        loading.hidden = false
-        var loginTmpCode = document.getElementById('loginTmpCode')
+      if (origin == "https://login.dingtalk.com") {
+        var container = document.getElementById("login_container");
+        container.hidden = true;
+        var loading = document.getElementById("loading");
+        loading.hidden = false;
+        var loginTmpCode = document.getElementById("loginTmpCode");
         loginTmpCode.value = event.data;
-        var form = document.getElementById('signin')
-        form.submit()
+        var form = document.getElementById("signin");
+        form.submit();
       }
     };
-    if (typeof window.addEventListener != 'undefined') {
-      window.addEventListener('message', handleMessage, false);
-    } else if (typeof window.attachEvent != 'undefined') {
-      window.attachEvent('onmessage', handleMessage);
+    if (typeof window.addEventListener != "undefined") {
+      window.addEventListener("message", handleMessage, false);
+    } else if (typeof window.attachEvent != "undefined") {
+      window.attachEvent("onmessage", handleMessage);
     }
   </script>
 </html>
