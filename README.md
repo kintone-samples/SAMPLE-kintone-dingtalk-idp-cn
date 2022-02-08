@@ -29,7 +29,7 @@ chmod +x cert.sh
 ```
 
 - 钉钉
-  - ![下载并运行钉钉的内网穿透程序](https://open.dingtalk.com/document/resourcedownload/http-intranet-penetration)，映射的本地端口为3000，并记下你选用的子域名。
+  - [下载并运行钉钉的内网穿透程序](https://open.dingtalk.com/document/resourcedownload/http-intranet-penetration)，映射的本地端口为3000，并记下你选用的子域名。
   - 钉钉开放平台->应用开发->企业内部开发->创建一个名为kintone的H5微应用。
   - 开发管理
     - 开发模式：快捷链接
