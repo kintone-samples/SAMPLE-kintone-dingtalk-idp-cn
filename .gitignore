@@ -202,3 +202,5 @@ yarn.lock
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+bin/ding*

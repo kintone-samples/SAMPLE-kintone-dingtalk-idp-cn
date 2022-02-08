@@ -6,7 +6,7 @@ const fm = {
   name: 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name',
   upn: 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn',
   groups: 'http://schemas.xmlsoap.org/claims/Group',
-}
+};
 
 /**
  *
@@ -24,9 +24,9 @@ const fm = {
  */
 function PassportProfileMapper(pu) {
   if (!(this instanceof PassportProfileMapper)) {
-    return new PassportProfileMapper(pu)
+    return new PassportProfileMapper(pu);
   }
-  this._pu = pu
+  this._pu = pu;
 }
 
 /**
@@ -35,23 +35,23 @@ function PassportProfileMapper(pu) {
  * @return {Object}    WsFederation claim identity
  */
 PassportProfileMapper.prototype.getClaims = function () {
-  const claims = {}
-  claims[fm.nameIdentifier] = this._pu.id
-  claims[fm.name] = this._pu.loginName
+  const claims = {};
+  claims[fm.nameIdentifier] = this._pu.id;
+  claims[fm.name] = this._pu.loginName;
 
   // var dontRemapAttributes = ['emails', 'displayName', 'name', 'id', '_json'];
-  const dontRemapAttributes = ['loginName', 'id', '_json']
+  const dontRemapAttributes = ['loginName', 'id', '_json'];
 
   Object.keys(this._pu)
     .filter((k) => !~dontRemapAttributes.indexOf(k))
     .forEach(
-      function (k) {
-        claims[`http://schemas.passportjs.com/${k}`] = this._pu[k]
-      }.bind(this),
-    )
+      (k) => {
+        claims[`http://schemas.passportjs.com/${k}`] = this._pu[k];
+      },
+    );
 
-  return claims
-}
+  return claims;
+};
 
 /**
  * returns the nameidentifier for the saml token.
@@ -59,12 +59,12 @@ PassportProfileMapper.prototype.getClaims = function () {
  * @return {Object} object containing a nameIdentifier property and optional nameIdentifierFormat.
  */
 PassportProfileMapper.prototype.getNameIdentifier = function () {
-  const claims = this.getClaims()
+  const claims = this.getClaims();
 
   return {
     nameIdentifier: claims[fm.nameIdentifier] || claims[fm.name],
-  }
-}
+  };
+};
 
 /**
  * claims metadata used in the metadata endpoint.
@@ -85,6 +85,6 @@ PassportProfileMapper.prototype.metadata = [
     displayName: 'Name ID',
     description: 'The SAML name identifier of the user',
   },
-]
+];
 
-module.exports = PassportProfileMapper
+module.exports = PassportProfileMapper;

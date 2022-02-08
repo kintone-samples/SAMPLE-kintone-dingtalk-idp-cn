@@ -1,12 +1,21 @@
 # Dingtalk-IdP-demo
 Node.js开发的Identity provider。  
-能使用钉钉扫码直接登陆kintone。 
+可使用钉钉扫码直接登陆kintone。  
+可为钉钉的kintone小程序提供认证。  
 
 # 效果
-![效果](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/screenshot.gif)
+扫码  
+![扫码](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/screenshot.gif)  
+
+小程序  
+![小程序](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/miniapp.gif)  
 
 # 原理
-![原理](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/design.png)
+扫码  
+![扫码](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/design.png)  
+
+小程序  
+![扫码](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/miniapp_design.png)  
 
 # 安装
 - 安装依赖
@@ -20,16 +29,23 @@ chmod +x cert.sh
 ```
 
 - 钉钉
-  - 钉钉开放平台->应用开发->企业内部开发->创建一个名为cybozu的H5微应用
-  - 开通 企业员工手机号信息	成员信息读权限 权限
+  - ![下载并运行钉钉的内网穿透程序](https://open.dingtalk.com/document/resourcedownload/http-intranet-penetration)，映射的本地端口为3000，并记下你选用的子域名。
+  - 钉钉开放平台->应用开发->企业内部开发->创建一个名为kintone的H5微应用。
+  - 开发管理
+    - 开发模式：快捷链接
+    - 快捷链接：http://内网穿透子域名.vaiwan.com/re?domain=你的kintone域名
+  - 权限管理
+    - 企业员工手机号信息
+    - 成员信息读权限
   - 接入与分享中添加回调域名
-  - 记住 AppSecret 及 AppKey
+  - 记住 AppSecret 、 AppKey 以及你的corpId
+  - 部署与发布中选择你的可使用人员并发布
 
 - kintone设定  
   - cybozu共通管理->系统管理->安全性->登录  
     - 勾选启用SAML身份验证
-    - Identity Provider的SSO终结点URL（HTTP-Redirect）中输入 http://localhost:3000/saml/sso
-    - 退出cybozu.cn后的跳转URL 中输入 http://localhost:3000/signout
+    - Identity Provider的SSO终结点URL（HTTP-Redirect）中输入 http://内网穿透子域名.vaiwan.com/saml/sso
+    - 退出cybozu.cn后的跳转URL 中输入 http://内网穿透子域名.vaiwan.com/signout
     - Identity Provider在签名时使用的公钥证书 上传上一步生成的 idp-public-cert.pem
     - 点击保存  
 
@@ -77,6 +93,12 @@ chmod +x cert.sh
     <td>单行文本框</td>
     <td>token</td>
     <td>用户对应表查询token</td>
+  </tr>
+  <tr>
+    <td>corpId</td>
+    <td>单行文本框</td>
+    <td>corpId</td>
+    <td>钉钉的corpId</td>
   </tr>
   <tr>
     <td>AppSecret</td>
