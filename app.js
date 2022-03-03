@@ -20,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.get('/favicon.ico', (_req, res) => res.status(204));
 
 app.use('/re', redirectRouter);
 app.use('/metadata', metadataRouter);

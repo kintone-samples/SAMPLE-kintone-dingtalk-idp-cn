@@ -32,9 +32,7 @@ router.post('/', async (req, res, next) => {
       recipient: data.assertionConsumerServiceURL,
     })(req, res, next);
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e);
-    res.status(500).send('Invalid sso request');
+    next(e);
   }
 });
 
