@@ -4,7 +4,7 @@ const router = express.Router();
 const kt = require('../../core/proxies/kintone');
 const { asyncParseRequest } = require('../../core/constants');
 
-const sso = async (req, res) => {
+const sso = async (req, res, next) => {
   try {
     const data = await asyncParseRequest(req);
     const domain = new URL(data.issuer).host;
@@ -16,7 +16,7 @@ const sso = async (req, res) => {
       res.render('sso', { appKey: setting.appKey, callback: setting.callback, SAMLRequest: req.query.SAMLRequest });
     }
   } catch (e) {
-    res.status(500).send('Invalid sso request');
+    next(e);
   }
 };
 
