@@ -60,3 +60,19 @@ module.exports.getMobile = async (token, userid) => {
   });
   return (await body.json()).result.mobile;
 };
+
+module.exports.getUseridByMobile = async (token, mobile) => {
+  const { body } = await request(`https://oapi.dingtalk.com/topapi/v2/user/getbymobile?access_token=${token}`, {
+    method: 'POST',
+    body: JSON.stringify({ mobile }),
+  });
+  return (await body.json()).result.userid;
+};
+
+module.exports.sendmsg = async (token, msg) => {
+  const { body } = await request(`https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2?access_token=${token}`, {
+    method: 'POST',
+    body: JSON.stringify(msg),
+  });
+  return (await body.json()).errcode;
+};

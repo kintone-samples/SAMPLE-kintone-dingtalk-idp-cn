@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "traversal": "ding ngrok --subdomain ${your_subdomain} --port 3000",
     "start": "node ./bin/www",
     "build": "ncc build -m ./bin/www -o docker"
   },
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@vercel/ncc": "^0.33.3",
+    "dingtalk-design-cli": "^0.20.8",
     "eslint": "^8.6.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4"
