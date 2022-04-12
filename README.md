@@ -129,7 +129,7 @@ chmod +x cert.sh
     <td>AgentId</td>
     <td>单行文本框</td>
     <td>agentId</td>
-    <td>AgentId</td>
+    <td>钉钉微应用的AgentId</td>
   </tr>
 </table>
 
