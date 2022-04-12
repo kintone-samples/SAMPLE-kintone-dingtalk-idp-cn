@@ -33,7 +33,7 @@ chmod +x cert.sh
 ```
 
 - 钉钉
-  - 修改package.json中的traversal下的${your_subdomain}。这个项目集成了[钉钉内网穿透]((https://open.dingtalk.com/document/resourcedownload/http-intranet-penetration))，可以直接通过npm run traversal来实现内网穿透。
+  - 修改package.json中的traversal下的${your_subdomain}。这个项目集成了[钉钉内网穿透]((https://open.dingtalk.com/document/resourcedownload/http-intranet-penetration))，可以直接通过npm run traversal来实现。
   - 钉钉开放平台->应用开发->企业内部开发->创建一个名为kintone的H5微应用。
   - 开发管理
     - 开发模式：快捷链接
