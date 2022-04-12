@@ -8,6 +8,7 @@ const ssoRouter = require('./routes/saml/sso');
 const signoutRouter = require('./routes/signout');
 const signinRouter = require('./routes/signin');
 const redirectRouter = require('./routes/redirect');
+const sendRouter = require('./routes/send');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/metadata', metadataRouter);
 app.use('/saml/sso', ssoRouter);
 app.use('/signout', signoutRouter);
 app.use('/signin', signinRouter);
+app.use('/send', sendRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => next(createError(404)));

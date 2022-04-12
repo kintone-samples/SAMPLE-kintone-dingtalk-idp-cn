@@ -1,5 +1,5 @@
 const { manager } = require('../constants');
-const { getLoginName, getSetting } = require('../repositories/kintone');
+const { getLoginName, getSetting, getMobiles } = require('../repositories/kintone');
 const cache = require('../cache');
 
 module.exports.setting = async (target) => {
@@ -18,4 +18,10 @@ module.exports.loginName = async (target, mobile) => {
     params: [domain, token, appid, mobile],
   });
   return name;
+};
+
+module.exports.mobiles = async (target, loginNames) => {
+  const { domain, appid, token } = target;
+  const mobiles = await getMobiles(domain, token, appid, loginNames);
+  return mobiles;
 };

@@ -56,7 +56,20 @@ module.exports = class Dingtalk {
 
   async userid(code) {
     const token = await getToken(this.appKey, this.appSecret);
-    const userid = dt.getUseridByCode(token, code);
+    const userid = await dt.getUseridByCode(token, code);
     return userid;
+  }
+
+  async userids(mobiles) {
+    const token = await getToken(this.appKey, this.appSecret);
+    const getMobiles = mobiles.map((mobile) => dt.getUseridByMobile(token, mobile));
+    const userids = await Promise.all(getMobiles);
+    return userids;
+  }
+
+  async sendmsg(msg) {
+    const token = await getToken(this.appKey, this.appSecret);
+    const code = await dt.sendmsg(token, msg);
+    return code;
   }
 };
