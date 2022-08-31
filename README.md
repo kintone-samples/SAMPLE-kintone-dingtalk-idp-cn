@@ -5,16 +5,16 @@ Node.js开发的Identity provider。
 可向指定的钉钉用户发送通知。
 
 # 效果 
-![扫码](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/screenshot.gif)  
+![扫码](https://raw.githubusercontent.com/kintone-samples/SAMPLE-kintone-dingtalk-idp-cn/master/screenshots/screenshot.gif)  
 
-![小程序](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/miniapp.gif)
+![小程序](https://raw.githubusercontent.com/kintone-samples/SAMPLE-kintone-dingtalk-idp-cn/master/screenshots/miniapp.gif)
 
-![通知](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/notify.gif)
+![通知](https://raw.githubusercontent.com/kintone-samples/SAMPLE-kintone-dingtalk-idp-cn/master/screenshots/notify.gif)
 
 # 原理
-![扫码](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/design.png)  
+![扫码](https://raw.githubusercontent.com/kintone-samples/SAMPLE-kintone-dingtalk-idp-cn/master/screenshots/design.png)  
  
-![小程序](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/miniapp_design.png)  
+![小程序](https://raw.githubusercontent.com/kintone-samples/SAMPLE-kintone-dingtalk-idp-cn/master/screenshots/miniapp_design.png)  
 
 # 安装
 - 安装依赖
@@ -49,7 +49,7 @@ chmod +x cert.sh
     - Identity Provider在签名时使用的公钥证书 上传上一步生成的 idp-public-cert.pem
     - 点击保存  
 
-  - 想要使用通知功能的请参照[这里](https://github.com/cyaoc/SAMPLE-kintone-dingtalk-notice-cn),添加kintone自定义程序。
+  - 想要使用通知功能的请参照[这里](https://github.com/kintone-samples/SAMPLE-kintone-dingtalk-notice-cn),添加kintone自定义程序。
 
 - 新建用户对应表app，并发行只有查看记录权限的令牌  
 <table>
