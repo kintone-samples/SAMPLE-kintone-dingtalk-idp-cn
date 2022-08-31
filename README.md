@@ -1,4 +1,4 @@
-# Dingtalk-IdP-demo
+# SAMPLE-kintone-dingtalk-idp-cn
 Node.js开发的Identity provider。  
 可使用钉钉扫码直接登陆kintone。  
 可为钉钉的kintone小程序提供认证。  
