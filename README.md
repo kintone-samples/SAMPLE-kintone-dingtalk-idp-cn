@@ -54,7 +54,7 @@ chmod +x cert.sh
     - Identity Provider在签名时使用的公钥证书 上传上一步生成的 idp-public-cert.pem
     - 点击保存  
 
-  - 想要使用通知功能的请参照[这里](https://github.com/cyaoc/Process2Ding),添加kintone自定义程序。
+  - 想要使用通知功能的请参照[这里](https://github.com/cyaoc/SAMPLE-kintone-dingtalk-notice-cn),添加kintone自定义程序。
 
 - 新建用户对应表app，并发行只有查看记录权限的令牌  
 <table>
