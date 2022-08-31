@@ -4,22 +4,17 @@ Node.js开发的Identity provider。
 可为钉钉的kintone小程序提供认证。  
 可向指定的钉钉用户发送通知。
 
-# 效果
-扫码  
+# 效果 
 ![扫码](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/screenshot.gif)  
 
-小程序  
 ![小程序](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/miniapp.gif)
 
-通知
 ![通知](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/notify.gif)
 
 # 原理
-扫码  
 ![扫码](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/design.png)  
-
-小程序  
-![扫码](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/miniapp_design.png)  
+ 
+![小程序](https://raw.githubusercontent.com/cyaoc/cn-idp/master/screenshots/miniapp_design.png)  
 
 # 安装
 - 安装依赖
